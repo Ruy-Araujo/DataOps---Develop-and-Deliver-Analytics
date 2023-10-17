@@ -59,10 +59,9 @@ class Extractor:
             return wrapper
         return decorator
 
-    @retry()
     async def extract(self, url):
         """
-        Extracts data from a given URL using HTTP requests.
+        Asynchronously extracts data from a given URL using HTTP requests.
 
         Args:
             url (str): The URL to extract data from.
@@ -72,24 +71,55 @@ class Extractor:
 
         Raises:
             Exception: If the HTTP GET request fails or the response status code is not 200.
+
+        Example:
+            extractor = Extractor()
+            results = await extractor.extract('https://example.com/api/data?page={page}')
         """
+        logging.info(f"Starting data extraction from {url}...")
         results = []
         page = 1
+        tasks = []
 
         async with httpx.AsyncClient(timeout=60) as client:
-            logging.info(f"Starting data extraction from {url}...")
-            while True:
-                url = url.format(page=page)
-                response = await client.get(url=url)
-                if response.status_code == 200:
-                    data = response.json()
-                    results.extend(data.get("results", []))
-                    next_page = data.get("next")
-                    if not next_page:
-                        break
-                    else:
-                        page += 1
-                else:
-                    raise Exception(f"Failed to fetch data from {url}")
-        logging.info(f"Data extracted with success...")
+            first_page = await self.extract_page(client, url.format(page=page))
+            results.extend(first_page.get("results", []))
+
+            if not first_page.get("next"):
+                return results
+
+            total_pages = first_page["count"] // len(first_page["results"])
+            for page in range(2, total_pages + 1):
+                tasks.append(self.extract_page(client, url.format(page=page)))
+            tasks_results = await asyncio.gather(*tasks)
+            results.extend([result for task_result in tasks_results for result in task_result.get("results", [])])
+
+        logging.info(f"Data from {url} extracted with success...")
         return results
+
+    @retry()
+    async def extract_page(self, client, url):
+        """
+        Asynchronously extracts data from a given URL using HTTP GET requests.
+
+        Args:
+            client (aiohttp.ClientSession): The client session to use for making HTTP requests.
+            url (str): The URL to extract data from.
+
+        Returns:
+            dict: A dictionary containing the JSON response obtained by making an HTTP GET request to the URL.
+
+        Raises:
+            Exception: If the HTTP GET request fails or the response status code is not 200.
+
+        Example:
+            extractor = Extractor()
+            async with aiohttp.ClientSession() as client:
+                data = await extractor.extract_page(client, 'https://example.com/api/data?page=1')
+        """
+        response = await client.get(url=url)
+        if response.status_code == 200:
+            data = response.json()
+            return data
+        else:
+            raise Exception(f"Failed to fetch data from {url}")
