@@ -1,22 +1,23 @@
 {
+    "save_path": "/opt/airflow/data/swapi/raw",
     "routes": [
         {
             "name": "people",
             "label": "Personagens",
             "url": "https://swapi.dev/api/people?page={page}",
-            "path": "./data/people/{datetime}_people.json"
+            "path": "{base}/people/{datetime}_people.json"
         },
         {
             "name": "planets",
             "label": "Planetas",
             "url": "https://swapi.dev/api/planets?page={page}",
-            "path": "./data/planets/{datetime}_planets.json"
+            "path": "{base}/planets/{datetime}_planets.json"
         },
         {
             "name": "films",
             "label": "Filmes",
             "url": "https://swapi.dev/api/films?page={page}",
-            "path": "./data/films/{datetime}_films.json"
+            "path": "{base}/films/{datetime}_films.json"
         }
     ]
 }
