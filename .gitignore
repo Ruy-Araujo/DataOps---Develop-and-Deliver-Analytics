@@ -1,3 +1,5 @@
 .*env
 .vscode
 *.cpython*
+log*
+*.__pycache__

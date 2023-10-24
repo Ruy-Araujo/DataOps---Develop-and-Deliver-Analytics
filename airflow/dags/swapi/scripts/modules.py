@@ -19,7 +19,6 @@ class Extractor:
     results = await extractor.extract("https://example.com/api/data?page={page}")
     ```
     """
-
     logging.basicConfig(level=logging.INFO)
 
     def __init__(self):
@@ -123,3 +122,4 @@ class Extractor:
             return data
         else:
             raise Exception(f"Failed to fetch data from {url}")
+
