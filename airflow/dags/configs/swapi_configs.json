@@ -3,24 +3,24 @@
         "people": {
             "name": "people",
             "label": "Personagens",
-            "url": "people_endpoint",
-            "raw_path": "{base}/people/{datetime}_people.json",
+            "endpoint": "/people",
+            "raw_path": "/swapi/landing/people/{datetime}_people.json",
             "meta_path": "/swapi/meta/people.csv",
             "work_path": "/people.csv"
         },
         "planets": {
             "name": "planets",
             "label": "Planetas",
-            "url": "planets_endpoint",
-            "raw_path": "{base}/planets/{datetime}_planets.json",
+            "endpoint": "/planets",
+            "raw_path": "/swapi/landing/planets/{datetime}_planets.json",
             "meta_path": "/swapi/meta/planets.csv",
             "work_path": "/planets.csv"
         },
         "films": {
             "name": "films",
             "label": "Filmes",
-            "url": "films_endpoint",
-            "raw_path": "{base}/films/{datetime}_films.json",
+            "endpoint": "/films",
+            "raw_path": "/swapi/landing/films/{datetime}_films.json",
             "meta_path": "/swapi/meta/films.csv",
             "work_path": "/films.csv"
         }
