@@ -6,7 +6,7 @@
             "endpoint": "/people",
             "raw_path": "/swapi/landing/people/{datetime}_people.json",
             "meta_path": "/swapi/meta/people.csv",
-            "work_path": "/people.csv"
+            "work_path": "/swapi/silver/people.csv"
         },
         "planets": {
             "name": "planets",
@@ -14,7 +14,7 @@
             "endpoint": "/planets",
             "raw_path": "/swapi/landing/planets/{datetime}_planets.json",
             "meta_path": "/swapi/meta/planets.csv",
-            "work_path": "/planets.csv"
+            "work_path": "/swapi/silver/planets.csv"
         },
         "films": {
             "name": "films",
@@ -22,11 +22,11 @@
             "endpoint": "/films",
             "raw_path": "/swapi/landing/films/{datetime}_films.json",
             "meta_path": "/swapi/meta/films.csv",
-            "work_path": "/films.csv"
+            "work_path": "/swapi/silver/films.csv"
         }
     },
     "dw": {
-        "meta_path": "dw_meta_path",
-        "dw_path": "dw_path"
+        "meta_path": "/swapi/meta/sw_metadado_to_dw.csv",
+        "dw_path": "/swapi/gold/sw.csv"
     }
 }
