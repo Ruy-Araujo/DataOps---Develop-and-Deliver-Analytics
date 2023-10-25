@@ -13,12 +13,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-async def extract(endpoint, save_path):
+async def extract(name, endpoint, save_path):
     extractor = Extractor()
     url = os.getenv("base_url") + endpoint + "?page={page}"
     data = await extractor.extract(url)
     save_path = os.getenv("raw_path") + save_path.format(datetime=datetime.now().strftime("%Y%m%d_%H%M%S"))
-    write(data, save_path)
+    file_name = write(data, save_path)
+    return {"table": name, "file": file_name}
 
 
 async def main():
@@ -26,13 +27,16 @@ async def main():
     tasks = []
     for k, v in config.items():
         tasks.append(asyncio.create_task(
-            extract(v["endpoint"], v['raw_path'])
+            extract(v["name"], v["endpoint"], v['raw_path'])
         ))
-    await asyncio.gather(*tasks)
+
+    files = await asyncio.gather(*tasks)
+    return files
 
 
-def run():
-    asyncio.run(main())
+def run(**kwargs):
+    files = asyncio.run(main())
+    kwargs['ti'].xcom_push(key='files', value=files)
 
 
 def generate_dag(dag):
