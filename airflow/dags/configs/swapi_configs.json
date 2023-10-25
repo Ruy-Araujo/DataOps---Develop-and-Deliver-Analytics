@@ -1,23 +1,32 @@
 {
-    "save_path": "/opt/airflow/data/swapi/raw",
-    "routes": [
-        {
+    "work": {
+        "people": {
             "name": "people",
             "label": "Personagens",
-            "url": "https://swapi.dev/api/people?page={page}",
-            "path": "{base}/people/{datetime}_people.json"
+            "endpoint": "/people",
+            "raw_path": "/swapi/landing/people/{datetime}_people.json",
+            "meta_path": "/swapi/meta/people.csv",
+            "work_path": "/swapi/silver/people.csv"
         },
-        {
+        "planets": {
             "name": "planets",
             "label": "Planetas",
-            "url": "https://swapi.dev/api/planets?page={page}",
-            "path": "{base}/planets/{datetime}_planets.json"
+            "endpoint": "/planets",
+            "raw_path": "/swapi/landing/planets/{datetime}_planets.json",
+            "meta_path": "/swapi/meta/planets.csv",
+            "work_path": "/swapi/silver/planets.csv"
         },
-        {
+        "films": {
             "name": "films",
             "label": "Filmes",
-            "url": "https://swapi.dev/api/films?page={page}",
-            "path": "{base}/films/{datetime}_films.json"
+            "endpoint": "/films",
+            "raw_path": "/swapi/landing/films/{datetime}_films.json",
+            "meta_path": "/swapi/meta/films.csv",
+            "work_path": "/swapi/silver/films.csv"
         }
-    ]
+    },
+    "dw": {
+        "meta_path": "/swapi/meta/sw_metadado_to_dw.csv",
+        "dw_path": "/swapi/gold/sw.csv"
+    }
 }
