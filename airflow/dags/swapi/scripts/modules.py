@@ -1,6 +1,11 @@
+import re
+import os
+import json
 import logging
 import httpx
 import asyncio
+import pandas as pd
+from datetime import date
 from functools import wraps
 
 
@@ -19,7 +24,6 @@ class Extractor:
     results = await extractor.extract("https://example.com/api/data?page={page}")
     ```
     """
-
     logging.basicConfig(level=logging.INFO)
 
     def __init__(self):
@@ -123,3 +127,68 @@ class Extractor:
             return data
         else:
             raise Exception(f"Failed to fetch data from {url}")
+
+
+class Saneamento:
+
+    def __init__(self, data, configs, tabela):
+        self.data = data
+        self.metadado = pd.read_csv(os.getenv("meta_path") + configs[tabela]["meta_path"])
+        self.len_cols = max(list(self.metadado["id"]))
+        self.colunas = list(self.metadado['campo_original'])
+        self.colunas_new = list(self.metadado['campo_final'])
+        self.path_work = os.getenv("work_path") + configs[tabela]["work_path"]
+
+    def rename(self):
+        for i in range(self.len_cols):
+            self.data.rename(columns={self.colunas[i].strip(): self.colunas_new[i].strip()}, inplace=True)
+
+    def normalize_dtype(self):
+        for col in self.colunas_new:
+            self.data[col] = self.data[col].astype(str)
+
+    def normalize_null(self):
+        for col in self.colunas_new:
+            self.data[col].replace("unknown", None, regex=True, inplace=True)
+            self.data[col].replace("n/a", None, regex=True, inplace=True)
+
+    def tipagem(self):
+        for col in self.colunas_new:
+            tipo = self.metadado.loc[self.metadado['campo_final'] == col]['tipo'].item()
+            if tipo == "int":
+                tipo = self.data[col].astype(int)
+            elif tipo == "float":
+                self.data[col].replace(",", ".", regex=True, inplace=True)
+                self.data[col] = self.data[col].astype(float)
+            elif tipo == "date":
+                self.data[col] = pd.to_datetime(self.data[col])
+
+    def normalize_str(self):
+        for col in self.colunas_new:
+            tipo = self.metadado.loc[self.metadado['campo_final'] == col]['tipo'].item()
+            if tipo == "string":
+                self.data[col] = self.data[col].apply(
+                    lambda x: x.encode('ASCII', 'ignore')
+                    .decode("utf-8").lower() if x != None else None)
+
+    def null_tolerance(self):
+        for col in self.colunas_new:
+            nul = self.metadado.loc[self.metadado['campo_final'] == col]['permite_nulo'].item()
+            if int(nul) == 0:
+                if len(self.data[self.data[col].isna()]) > 0:
+                    raise Exception(f"{self.tabela} possui nulos acima do permitido")
+
+    def check_key(self):
+        for col in self.colunas_new:
+            nul = self.metadado.loc[self.metadado['campo_final'] == col]['chave'].item()
+            if int(nul) == 1:
+                if len(self.data) != self.data[col].nunique():
+                    raise Exception(f"{self.tabela} chaves duplicadas")
+
+    def save_work(self):
+        self.data["load_date"] = date.today()
+        if not os.path.exists(self.path_work):
+            os.makedirs(os.path.dirname(self.path_work), exist_ok=True)
+            self.data.to_csv(self.path_work, index=False, sep=";")
+        else:
+            self.data.to_csv(self.path_work, index=False, mode='a', header=False, sep=";")
