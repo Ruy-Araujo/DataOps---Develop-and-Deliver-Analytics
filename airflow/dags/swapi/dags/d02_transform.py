@@ -1,11 +1,12 @@
+import json
+import logging
 import pandas as pd
-from tools.file_maneger import load_config
-from datetime import datetime
+
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-import logging
+
+from tools.file_maneger import load_config
 from swapi.scripts.modules import Saneamento
-import json
 
 # logging.basicConfig(level=logging.INFO)
 
@@ -16,6 +17,7 @@ def preparation_work(**kwargs):
 
     if len(files) > 0:
         for file in files:
+            logging.info(f"Iniciado transformação dos dados {file['table']}")
             json_data = json.load(open(file["file"], "r"))
             df = pd.DataFrame.from_records(json_data)
             san = Saneamento(df, configs_work, file["table"])
@@ -26,6 +28,7 @@ def preparation_work(**kwargs):
             san.normalize_str()
             san.null_tolerance()
             san.save_work()
+            logging.info(f"Transformação dos dados {file['table']} finalizada")
     else:
         print("sem dados novos")
 
