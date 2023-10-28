@@ -2,11 +2,14 @@
 
 - [Projeto DataOps](#projeto-dataops)
   - [Introdução](#introdução)
-  - [Estrutura do projeto](#estrutura-do-projeto)
+  - [Arquitetura do projeto](#arquitetura-do-projeto)
     - [Extração](#extração)
+    - [Sanitização](#sanitização)
+    - [Transformação e Disponibiliade](#transformação-e-disponibiliade)
+    - [Orquestração](#orquestração)
   - [Origem dos dados](#origem-dos-dados)
-  - [Requisitos](#requisitos)
-  - [Componentes do grupo](componentes-do-grupo)
+  - [Como executar o projeto](#como-executar-o-projeto)
+  - [Contribuidores](#contribuidores)
 
 ## Introdução
 
@@ -16,14 +19,13 @@ O projeto consite em obter dados da API “SWAPI — the Star Wars API” e gera
 A API SWAPI refere-se ao universo de Star Wars, maior franquia da cultura pop de todos os tempos, e traz dados relativos a Planetas, Naves Espaciais, Veículos, Pessoas (no nosso caso adotamos o conceito de Personagem), Filmes e Espécies. Todo o conteúdo do site em que a api está hospedada está em inglês, logo as bases estão em inglês sendo denominadas Planets, Spaceships, Vehicles, People, Films and Species.
 Para esse projeto consumimos dados apenas das  fontes de dados Planets, People e Films, conforme descrição a seguir:
 
-- Personagens: Os detalhes sobre os personagens da saga Star Wars podem ser obtidos na seguinte URL: https://swapi.dev/api/people/.
+- Personagens: Os detalhes sobre os personagens da saga Star Wars podem ser obtidos na seguinte URL: <https://swapi.dev/api/people/>.
 
-- Planetas: Informações sobre os planetas do universo Star Wars estão disponíveis na URL: https://swapi.dev/api/planets/.
+- Planetas: Informações sobre os planetas do universo Star Wars estão disponíveis na URL: <https://swapi.dev/api/planets/>.
 
-- Filmes: Os dados relacionados aos filmes da franquia Star Wars podem ser acessados na URL: https://swapi.dev/api/films/.
+- Filmes: Os dados relacionados aos filmes da franquia Star Wars podem ser acessados na URL: <https://swapi.dev/api/films/>.
 
-
-## Estrutura do projeto
+## Arquitetura do projeto
 
 ![alt text](./misc/projeto.png)
 
@@ -31,60 +33,67 @@ Para esse projeto consumimos dados apenas das  fontes de dados Planets, People e
 
   Para extração dos dados foi utilizado a biblioteca httpx, com o objetivo de realizar requisições HTTP de forma assíncrona.
 
+### Sanitização
+
+  Para a sanitização dos dados foi utilizado a biblioteca pandas, com o objetivo de realizar a limpeza dos dados, como por exemplo, a remoção de caracteres especiais, conversão de tipos, remoção de valores nulos, etc. Levando como base os arquivos de configuração da pasta [meta](airflow/dags/swapi/meta).
+
+### Transformação e Disponibiliade
+
+  Após sanitizados os dados foram transformados e agrupados em um único arquivo csv para ser consulmido por outras aplicações. Todas as configurações estão disponiveis na pasta [meta](airflow/dags/swapi/meta).
+
+### Orquestração
+
+  Para a orquestração do projeto foi utilizado o Airflow, com o objetivo de realizar o agendamento das tarefas e monitoramento das mesmas. Todas as configurações estão disponiveis na pasta [dags](airflow/dags/swapi).
+
 ## Origem dos dados
 
 - <https://swapi.dev/api/people/>?
 - <https://swapi.dev/api/planets/>?
 - <https://swapi.dev/api/films/>?
 
-## Requisitos
+## Como executar o projeto
 
-- Formato da tabela de entrega: csv
-- Frequência de atualização do dado: frequência de 1x por dia
-- Parâmetro de coleta: 1 página por dia
-- Salvar logs do processo
-- Armazenamento dos dados brutos
-- Armazenamento dos dados saneados: Tratamento de tipos, nomes e nulos
-- Armazenamento dos dados agregados e tratados
-- Validação de qualidade de dados: Validação de duplicados e Tolerância de nulos
-- Orquestração realizada via airflow
+Para executar o projeto é necessário ter o docker e docker-compose instalados na máquina.
 
+1. Clone o projeto
 
+2. Execute o build da imagem do airflow customizada com as bibliotecas necessarias para o projeto.
 
-Os dados que serão coletados para este projeto têm origem na Star Wars API (SWAPI). 
+```bash
+docker build -t custom-airflow:2.7.2 -f ./Dockerfile.airflow .   
+```
 
-3) Requisitos do Sistema
+3. Preencha as variáveis de ambiente necessarias no arquivo .env
 
-Para garantir o sucesso deste projeto de coleta e armazenamento de dados da SWAPI, é essencial definir requisitos claros e especificações técnicas:
+4. Configure o projeto com o comando abaixo
 
-Formato da tabela de entrega: Os dados coletados devem ser armazenados em formato CSV (Comma-Separated Values), um formato amplamente suportado para armazenamento de dados tabulares.
+```bash
+docker compose up airflow-init   
+```
 
-Frequência de atualização dos dados: A coleta de dados deve ocorrer com uma frequência de pelo menos uma vez por dia, garantindo que as informações estejam sempre atualizadas.
+5. Inicie o projeto com o comando abaixo
 
-Parâmetro de coleta: A coleta de dados deve ser configurada para coletar uma página de dados por dia a partir das URLs fornecidas, permitindo uma distribuição eficiente da carga de solicitações.
+```bash
+docker compose up
+```
 
-Salvar logs do processo: É importante registrar e armazenar logs do processo de coleta, incluindo informações sobre quando a coleta ocorreu, se houve erros e outras informações relevantes para fins de rastreamento e auditoria.
+6. Acesse o airflow em <http://localhost:8080>
 
-Armazenamento dos dados brutos: Os dados brutos coletados da SWAPI devem ser armazenados sem qualquer modificação ou processamento adicional, para garantir a integridade dos dados originais.
+## Contribuidores
 
-Armazenamento dos dados saneados: Além dos dados brutos, é necessário implementar um processo de saneamento que inclua o tratamento de tipos de dados, correção de nomes, preenchimento de valores nulos e outras etapas necessárias para garantir a qualidade dos dados.
+<a href="https://github.com/Ruy-Araujo">
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/53796141?v=4" width="100px;" alt=""/>
+<br />
+<sub><b>Ruy Araujo</b></sub></a>
+<br />
 
-Armazenamento dos dados agregados e tratados: Os dados tratados e saneados devem ser armazenados de forma organizada e pronta para uso em análises posteriores.
+<a href="https://github.com/icaloooou">
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/72050304?v=4" width="100px;" alt=""/>
+<br />
+<sub><b>Ingrid Calou Batista</b></sub></a>
+<br />
 
-Validação de qualidade de dados: Um processo de validação de qualidade de dados deve ser implementado, incluindo a identificação e tratamento de registros duplicados e a definição de tolerâncias para valores nulos.
-
-Esses requisitos e especificações técnicas ajudarão a garantir que o projeto de coleta e armazenamento de dados da SWAPI seja bem-sucedido, com dados precisos, atualizados e de alta qualidade prontos para análises e outras aplicações.
-
-
-
-
-
-
-  ## Componentes do grupo
-
-  - Gisele Souza
-  - Ingrid Calou
-  - Monise Negrão
-  - Pablo Batista
-  - Ruy Peral
-
+<a href="https://github.com/GiselePSouza">
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/147109622?v=4" width="100px;" alt=""/>
+<br />
+<sub><b>Gisele Souza</b></sub></a>
