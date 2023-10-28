@@ -82,9 +82,9 @@ Esses requisitos e especificações técnicas ajudarão a garantir que o projeto
 
   ## Componentes do grupo
 
-  Gisele Souza
-  Ingrid Calou
-  Monise Negrão
-  Pablo Batista
-  Ruy Peral
+  - Gisele Souza
+  - Ingrid Calou
+  - Monise Negrão
+  - Pablo Batista
+  - Ruy Peral
 
