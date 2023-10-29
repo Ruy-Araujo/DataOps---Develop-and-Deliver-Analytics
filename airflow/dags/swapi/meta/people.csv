@@ -1,17 +1,17 @@
-tabela,id,campo_original,campo_final,descricao,tipo,chave,permite_nulo,mascara_nulo,min_value,max_value,categoria
-people,1,name,nome,nome do personagem,string,0,0,,,,
-people,2,birth_year,ano_nascimento,"ano de nascimento do personagem, usando o padrão do universo de ABY ou ABY - Antes da Batalha de Yavin ou Depois da Batalha de Yavin",string,0,1,,,,
-people,3,eye_color,cor_olho,cor dos olhos desta pessoa. Será “desconhecido” se não for conhecido ou “n/a” se a pessoa não tiver olho,string,0,1,,,,
-people,4,gender,genero,"gênero desta pessoa. Ou ""Masculino"", ""Feminino"" ou ""desconhecido"", ""n/a"" se a pessoa não tiver sexo",string,0,1,,,,
-people,5,hair_color,cor_cabelo,cor do cabelo desta pessoa. Será “desconhecido” se não for conhecido ou “n/a” se a pessoa não tiver cabelo,string,0,1,,,,
-people,6,height,altura,altura da pessoa em centímetros,string,0,1,,,,
-people,7,mass,peso,massa da pessoa em quilogramas,string,0,1,,,,
-people,8,skin_color,cor_pele,cor da pele desta pessoa,string,0,1,,,,
-people,9,homeworld,url_homeworld,URL do planeta onde esta pessoa nasceu ou habita,string,0,1,,,,
-people,10,films,url_films,matriz de URLs de recursos de filmes em que este personagem aparece,array,0,0,,,,
-people,11,species,url_especies,matriz de URLs de recursos de espécies às quais esta personagem pertence,array,0,1,,,,
-people,12,starships,url_starships,matriz de URLs de recursos de naves estelares que esta personagem pilotou,array,0,1,,,,
-people,13,vehicles,url_vehicles,matriz de URLs de recursos de veículos que esta personagem pilotou,array,0,1,,,,
-people,14,url,url_origem,URL hipermídia deste recurso,string,1,0,,,,
-people,15,created,data_criacao,formato de data ISO 8601 da hora em que este recurso foi criado,string,0,1,,,,
-people,16,edited,data_edicao,formato de data ISO 8601 da hora em que este recurso foi editado,string,0,1,,,,
+tabela,id,campo_original,campo_final,descricao,tipo,chave,permite_nulo
+people,1,name,nome,nome do personagem,string,0,0
+people,2,birth_year,ano_nascimento,"ano de nascimento do personagem, usando o padrão do universo de ABY ou ABY - Antes da Batalha de Yavin ou Depois da Batalha de Yavin",string,0,1
+people,3,eye_color,cor_olho,cor dos olhos desta pessoa. Será “desconhecido” se não for conhecido ou “n/a” se a pessoa não tiver olho,string,0,1
+people,4,gender,genero,"gênero desta pessoa. Ou ""Masculino"", ""Feminino"" ou ""desconhecido"", ""n/a"" se a pessoa não tiver sexo",string,0,1
+people,5,hair_color,cor_cabelo,cor do cabelo desta pessoa. Será “desconhecido” se não for conhecido ou “n/a” se a pessoa não tiver cabelo,string,0,1
+people,6,height,altura,altura da pessoa em centímetros,string,0,1
+people,7,mass,peso,massa da pessoa em quilogramas,string,0,1
+people,8,skin_color,cor_pele,cor da pele desta pessoa,string,0,1
+people,9,homeworld,url_homeworld,URL do planeta onde esta pessoa nasceu ou habita,string,0,1
+people,10,films,url_films,matriz de URLs de recursos de filmes em que este personagem aparece,array,0,0
+people,11,species,url_especies,matriz de URLs de recursos de espécies às quais esta personagem pertence,array,0,1
+people,12,starships,url_starships,matriz de URLs de recursos de naves estelares que esta personagem pilotou,array,0,1
+people,13,vehicles,url_vehicles,matriz de URLs de recursos de veículos que esta personagem pilotou,array,0,1
+people,14,url,url_origem,URL hipermídia deste recurso,string,1,0
+people,15,created,data_criacao,formato de data ISO 8601 da hora em que este recurso foi criado,string,0,1
+people,16,edited,data_edicao,formato de data ISO 8601 da hora em que este recurso foi editado,string,0,1

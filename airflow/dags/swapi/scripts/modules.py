@@ -138,6 +138,13 @@ class Saneamento:
         self.colunas = list(self.metadado['campo_original'])
         self.colunas_new = list(self.metadado['campo_final'])
         self.path_work = os.getenv("work_path") + configs[tabela]["work_path"]
+        self.dest_data = self.load_data(configs, tabela)
+
+    def load_data(self, configs, tabela):
+        try:
+            return pd.read_csv(f"{os.getenv('work_path')}{configs[tabela]['work_path']}", sep=";")
+        except FileNotFoundError:
+            return pd.DataFrame()
 
     def rename(self):
         for i in range(self.len_cols):
@@ -184,6 +191,16 @@ class Saneamento:
             if int(nul) == 1:
                 if len(self.data) != self.data[col].nunique():
                     raise Exception(f"{self.tabela} chaves duplicadas")
+
+    def duplicate_tolerance(self):
+        key_col = self.metadado['campo_final'].where(self.metadado['chave'] == 1).dropna().item()
+
+        self.data = pd.concat([self.dest_data, self.data]) \
+            .drop_duplicates(subset=key_col) \
+            .dropna(subset=[key_col])
+
+        if self.data[key_col].duplicated().any():
+            raise Exception(f"{self.tabela} possui chaves duplicadas")
 
     def save_work(self):
         self.data["load_date"] = date.today()

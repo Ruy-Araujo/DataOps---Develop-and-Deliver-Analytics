@@ -1,15 +1,15 @@
-tabela,id,campo_original,campo_final,descricao,tipo,chave,permite_nulo,mascara_nulo,min_value,max_value,categoria
-films,1,title,titulo_filme,titulo do filme,string,0,0,,,,
-films,2,episode_id ,episodio_filme,número do episódio deste filme,int,0,0,,,,
-films,3,opening_crawl,descricao_filme,parágrafos iniciais no início deste filme,string,0,1,,,,
-films,4,director,diretor_filme,nome do diretor deste filme,string,0,1,,,,
-films,5,producer,produtor_filme,nome(s) do(s) produtor(es) deste filme. Separado por virgula,string,0,1,,,,
-films,6,release_date,data_lancamento_filme,formato de data ISO 8601 de lançamento do filme no país do criador original,date,0,1,,,,
-films,7,species,especies_filme,matriz de URLs de recursos de espécies às quais esta pessoa pertence,array,0,1,,,,
-films,8,starships,naves_filme,matriz de URLs de recursos de naves estelares que esta pessoa pilotou,array,0,1,,,,
-films,9,vehicles,veiculos_filme,matriz de URLs de recursos de veículos que esta pessoa pilotou,array,0,1,,,,
-films,10,characters,atores_filme,URL hipermídia deste recurso,string,0,1,,,,
-films,11,planets,planetas_filme,matriz de URLs de recursos planetários que estão neste filme,array,0,1,,,,
-films,12,url,url_origem,URL hipermídia deste recurso,string,0,0,,,,
-films,13,created,data_criacao,formato de data ISO 8601 da hora em que este recurso foi criado,string,0,1,,,,
-films,14,edited,data_edicao,formato de data ISO 8601 da hora em que este recurso foi editado,string,1,1,,,,
+tabela,id,campo_original,campo_final,descricao,tipo,chave,permite_nulo
+films,1,title,titulo_filme,titulo do filme,string,0,0
+films,2,episode_id ,episodio_filme,número do episódio deste filme,int,0,0
+films,3,opening_crawl,descricao_filme,parágrafos iniciais no início deste filme,string,0,1
+films,4,director,diretor_filme,nome do diretor deste filme,string,0,1
+films,5,producer,produtor_filme,nome(s) do(s) produtor(es) deste filme. Separado por virgula,string,0,1
+films,6,release_date,data_lancamento_filme,formato de data ISO 8601 de lançamento do filme no país do criador original,date,0,1
+films,7,species,especies_filme,matriz de URLs de recursos de espécies às quais esta pessoa pertence,array,0,1
+films,8,starships,naves_filme,matriz de URLs de recursos de naves estelares que esta pessoa pilotou,array,0,1
+films,9,vehicles,veiculos_filme,matriz de URLs de recursos de veículos que esta pessoa pilotou,array,0,1
+films,10,characters,atores_filme,URL hipermídia deste recurso,string,0,1
+films,11,planets,planetas_filme,matriz de URLs de recursos planetários que estão neste filme,array,0,1
+films,12,url,url_origem,URL hipermídia deste recurso,string,1,0
+films,13,created,data_criacao,formato de data ISO 8601 da hora em que este recurso foi criado,string,0,1
+films,14,edited,data_edicao,formato de data ISO 8601 da hora em que este recurso foi editado,string,0,1

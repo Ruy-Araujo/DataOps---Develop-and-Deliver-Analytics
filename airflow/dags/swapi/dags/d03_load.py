@@ -4,7 +4,7 @@ import pandas as pd
 
 from airflow.operators.python_operator import PythonOperator
 
-from tools.file_maneger import load_config
+from tools.file_maneger import load_config, write
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -47,7 +47,7 @@ def sw_work_to_dw():
     ).rename(columns={"nome_planeta": 'planeta_natal'})
 
     sw = df[list(pd.read_csv(f"{dw_meta_path}{configs['dw']['meta_path']}")['nome'])]
-    sw.to_csv(f"{dw_path}{configs['dw']['dw_path']}", index=False)
+    write(sw, f"{dw_path}{configs['dw']['dw_path']}")
 
     logging.info("Transform data to DW finished")
     return True

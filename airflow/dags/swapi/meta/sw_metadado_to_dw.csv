@@ -1,18 +1,18 @@
-tabela,id,nome,descricao,tipo,chave,permite_nulo,max_value,min_value,categoria,regra
-DW,1,nome,nome do personagem,string,0,0,,,,
-DW,2,altura,altura do personagem,float,0,1,,,,
-DW,3,peso,peso do personagem,float,0,1,,,,
-DW,4,cor_cabelo,cor do cabelo do personagem,string,0,1,,,,
-DW,5,cor_pele,cor da pele do personagem,string,0,1,,,,
-DW,6,cor_olho,cor do olho do personagem,string,0,1,,,,
-DW,7,ano_nascimento,ano de nascimento do personagem,string,0,1,,,,
-DW,8,genero,genero do personagem,string,0,1,,,,
-DW,9,planeta_natal,nome do planeta natal do personagem,string,0,1,,,,
-DW,11,qtd_veiculos,quantidade de veiculos utilizados pelo personagem,int,0,1,,,,
-DW,12,qtd_naves,quantidade de naves utilizadas pelo personagem,int,0,1,,,,
-DW,13,the_phantom_menace,flag de participacao no filme the_phantom_menace,string,0,0,,,,
-DW,14,attack_of_the_clones,flag de participacao no filme attack_of_the_clones,string,0,0,,,,
-DW,15,revenge_of_the_sith,flag de participacao no filme revenge_of_the_sith,string,0,0,,,,
-DW,16,a_new_hope,flag de participacao no filme a_new_hope,string,0,0,,,,
-DW,17,the_empire_strikes_back,flag de participacao no filme the_empire_strikes_back,string,0,0,,,,
-DW,18,return_of_the_jedi,flag de participacao no filme return_of_the_jedi,string,0,0,,,,
+tabela,id,nome,descricao,tipo,chave,permite_nulo
+DW,1,nome,nome do personagem,string,0,0
+DW,2,altura,altura do personagem,float,0,1
+DW,3,peso,peso do personagem,float,0,1
+DW,4,cor_cabelo,cor do cabelo do personagem,string,0,1
+DW,5,cor_pele,cor da pele do personagem,string,0,1
+DW,6,cor_olho,cor do olho do personagem,string,0,1
+DW,7,ano_nascimento,ano de nascimento do personagem,string,0,1
+DW,8,genero,genero do personagem,string,0,1
+DW,9,planeta_natal,nome do planeta natal do personagem,string,0,1
+DW,11,qtd_veiculos,quantidade de veiculos utilizados pelo personagem,int,0,1
+DW,12,qtd_naves,quantidade de naves utilizadas pelo personagem,int,0,1
+DW,13,the_phantom_menace,flag de participacao no filme the_phantom_menace,string,0,0
+DW,14,attack_of_the_clones,flag de participacao no filme attack_of_the_clones,string,0,0
+DW,15,revenge_of_the_sith,flag de participacao no filme revenge_of_the_sith,string,0,0
+DW,16,a_new_hope,flag de participacao no filme a_new_hope,string,0,0
+DW,17,the_empire_strikes_back,flag de participacao no filme the_empire_strikes_back,string,0,0
+DW,18,return_of_the_jedi,flag de participacao no filme return_of_the_jedi,string,0,0
