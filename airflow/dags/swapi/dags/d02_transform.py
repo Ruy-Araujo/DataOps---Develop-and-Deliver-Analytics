@@ -27,6 +27,7 @@ def preparation_work(**kwargs):
             san.tipagem()
             san.normalize_str()
             san.null_tolerance()
+            san.duplicate_tolerance()
             san.save_work()
             logging.info(f"Transformação dos dados {file['table']} finalizada")
     else:
