@@ -2,6 +2,7 @@
 
 - [Projeto DataOps](#projeto-dataops)
   - [Introdução](#introdução)
+  - [Requisitos](#requisitos)
   - [Arquitetura do projeto](#arquitetura-do-projeto)
     - [Extração](#extração)
     - [Sanitização](#sanitização)
@@ -24,6 +25,22 @@ Para esse projeto consumimos dados apenas das  fontes de dados Planets, People e
 - Planetas: Informações sobre os planetas do universo Star Wars estão disponíveis na URL: <https://swapi.dev/api/planets/>.
 
 - Filmes: Os dados relacionados aos filmes da franquia Star Wars podem ser acessados na URL: <https://swapi.dev/api/films/>.
+
+## Requisitos
+
+- [x] Formato da tabela de entrega: csv
+- [x] Frequência de atualização do dado: frequência de 1x por dia
+- [x] Parâmetro de coleta: 1 página por requisição
+- [x] Salvar logs do processo
+- [x] Armazenamento dos dados brutos
+- [x] Armazenamento dos dados saneados:
+  - [x] Tratamento de tipos
+  - [x] Tratamento de nomes
+  - [x] Tratamento de nulos
+  - [x] Armazenamento dos dados agregados e tratados
+- [x] Validação de qualidade de dados:
+  - [X] Validação de duplicados
+  - [x] Tolerância de nulos
 
 ## Arquitetura do projeto
 
