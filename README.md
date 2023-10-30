@@ -82,19 +82,19 @@ docker build -t custom-airflow:2.7.2 -f ./Dockerfile.airflow .
 
 3. Preencha as variáveis de ambiente necessarias no arquivo .env
 
-4. Configure o projeto com o comando abaixo
+4. Configure o projeto com o comando abaixo.
 
 ```bash
 docker compose up airflow-init   
 ```
 
-5. Inicie o projeto com o comando abaixo
+5. Inicie o projeto com o comando abaixo.
 
 ```bash
 docker compose up
 ```
 
-6. Acesse o airflow em <http://localhost:8080>
+6. Acesse o airflow em <http://localhost:8080>.
 
 ## Contribuidores
 
@@ -114,3 +114,11 @@ docker compose up
 <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/147109622?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>Gisele Souza</b></sub></a>
+<br />
+
+<a href="https://github.com/ElPablitoBR">
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/131319344?v=4" width="100px;" alt=""/>
+<br />
+<sub><b>Pablo Batista</b></sub></a> 
+<br />
+
