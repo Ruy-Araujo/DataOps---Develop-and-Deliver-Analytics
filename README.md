@@ -1,4 +1,4 @@
-# Projeto DataOps
+## Projeto DataOps
 
 - [Projeto DataOps](#projeto-dataops)
   - [Introdução](#introdução)
@@ -72,21 +72,24 @@ Para esse projeto consumimos dados apenas das  fontes de dados Planets, People e
 
 Para executar o projeto é necessário ter o docker e docker-compose instalados na máquina.
 
-1. Clone o projeto
+1. Clone o projeto.
 
-2. Execute o build da imagem do airflow customizada com as bibliotecas necessarias para o projeto.
+2. Execute o build da imagem do airflow customizada com as bibliotecas necessarias para o projeto:
 
 ```bash
 docker build -t custom-airflow:2.7.2 -f ./Dockerfile.airflow .   
 ```
 
-3. Preencha as variáveis de ambiente necessarias no arquivo .env
+3. Preencha as variáveis de ambiente necessarias no arquivo .env .
+
 
 4. Configure o projeto com o comando abaixo.
+
 
 ```bash
 docker compose up airflow-init   
 ```
+
 
 5. Inicie o projeto com o comando abaixo.
 
@@ -122,3 +125,8 @@ docker compose up
 <sub><b>Pablo Batista</b></sub></a> 
 <br />
 
+<a href="https://github.com/moninegrao">
+<img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/32415249?v=4" width="100px;" alt=""/>
+<br />
+<sub><b>Monise Negrão</b></sub></a> 
+<br />
