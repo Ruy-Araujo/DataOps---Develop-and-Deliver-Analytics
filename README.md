@@ -14,19 +14,21 @@
 
 ## Introdução
 
-Projeto desenvolvido para avaliação final da disciplina DataOps oferecida no curso de MBA em Engenharia de Dados turma 03 (2023-2024), oferecido pela faculdade Impacta.
+Projeto desenvolvido para avaliação final da disciplina DataOps, ministrada no curso de MBA em Engenharia de Dados turma 03 (2023-2024), oferecida pela Faculdade Impacta de Tecnologia.
 
 O projeto consite em obter dados da API “SWAPI — the Star Wars API” e gerar um arquivo .csv com os dados relativos a características do personagem, seu planeta natal e os filmes em que ele/ela participou.
-A API SWAPI refere-se ao universo de Star Wars, maior franquia da cultura pop de todos os tempos, e traz dados relativos a Planetas, Naves Espaciais, Veículos, Pessoas (no nosso caso adotamos o conceito de Personagem), Filmes e Espécies. Todo o conteúdo do site em que a api está hospedada está em inglês, logo as bases estão em inglês sendo denominadas Planets, Spaceships, Vehicles, People, Films and Species.
-Para esse projeto consumimos dados apenas das  fontes de dados Planets, People e Films, conforme descrição a seguir:
 
-- Personagens: Os detalhes sobre os personagens da saga Star Wars podem ser obtidos na seguinte URL: <https://swapi.dev/api/people/>.
+A API SWAPI refere-se ao universo de Star Wars, maior franquia da cultura pop de todos os tempos, e traz dados relativos a Planetas, Naves Espaciais, Veículos, Pessoas (no nosso caso adotamos o conceito de Personagem), Filmes e Espécies. Todo o conteúdo do site em que a API está hospedada está em inglês, logo as bases estão denominadas no original como Planets, Spaceships, Vehicles, People, Films and Species.
 
-- Planetas: Informações sobre os planetas do universo Star Wars estão disponíveis na URL: <https://swapi.dev/api/planets/>.
+Para esse projeto consumimos dados apenas das fontes Planets, People e Films, onde em Planetas temos informações sobre os planetas do universo Star Wars, em Personagens temos os detalhes sobre os personagens da saga, e em Filmes temos os dados relacionados aos filmes da franquia Star Wars. 
 
-- Filmes: Os dados relacionados aos filmes da franquia Star Wars podem ser acessados na URL: <https://swapi.dev/api/films/>.
+Cabe ressalatar que o aplicativo abrange apenas os 6 primeiros filmes da saga, não expandindo para os conteúdos derivados em séries, livros, quadrinhos e jogos. Os filmes cobertos pelos dados da API são: Episódio I: A Ameaça Fantasma (1999); Episódio II: Ataque dos Clones (2002); Episódio III: A Vingança dos Sith (2005); Episódio IV: Uma Nova Esperança (1977); Episódio V: O Império Contra-Ataca (1980); Episódio VI: O Retorno de Jedi (1983).
+
+Apesar da aplicação informar em sua página inicial que inclui dados de 7 filmes de Star Wars, contando também com os dados de O Despertar da Força, isso não se configurou quando realizamos a validação dos dados.
 
 ## Requisitos
+
+  Os requisitos levantados e definidos para a concepção desse projeto estão a seguir em formato de tópicos para melhor visualização dos pontos que devem ser cobertos:
 
 - [x] Formato da tabela de entrega: csv
 - [x] Frequência de atualização do dado: frequência de 1x por dia
@@ -48,33 +50,35 @@ Para esse projeto consumimos dados apenas das  fontes de dados Planets, People e
 
 ### Extração
 
-  Para extração dos dados foi utilizado a biblioteca httpx, com o objetivo de realizar requisições HTTP de forma assíncrona.
-
+  Para extração dos dados foi utilizado a biblioteca HTTPX, com o objetivo de realizar requisições HTTP de forma assíncrona. Utilizamos um parâmetro de coleta que se traduz em uma página por requisição, otimizando a eficiência do processo de ETL. Todos os dados brutos encontram-se armazenados na pasta [data/swapi](silver), preservando sua integridade original. 
+  
 ### Sanitização
 
-  Para a sanitização dos dados foi utilizado a biblioteca pandas, com o objetivo de realizar a limpeza dos dados, como por exemplo, a remoção de caracteres especiais, conversão de tipos, remoção de valores nulos, etc. Levando como base os arquivos de configuração da pasta [meta](airflow/dags/swapi/meta).
+  A sanitização dos dados foi realizada utilizando a biblioteca Pandas para garantir que os dados estejam limpos e prontos para análises avançadas. Foram realizados processos como remoção de caracteres especiais, conversão de tipos, remoção de valores nulos, etc, baseando-se nos arquivos de configuração encontrados na pasta [meta](airflow/dags/swapi/meta). Os dados sanitizados de cada base encontram-se salvos separadamente na pasta [data/swapi](landing) 
 
 ### Transformação e Disponibiliade
 
-  Após sanitizados os dados foram transformados e agrupados em um único arquivo csv para ser consulmido por outras aplicações. Todas as configurações estão disponiveis na pasta [meta](airflow/dags/swapi/meta).
+  Após sanitizados, os dados foram transformados e agrupados em um único arquivo .csv para que possa ser consumido por outras aplicações. Os dados sanitizados de cada base encontram-se salvos separadamente na pasta [data/swapi](gold). Todas as configurações estão disponiveis na pasta [meta](airflow/dags/swapi/meta).
 
 ### Orquestração
 
-  Para a orquestração do projeto foi utilizado o Airflow, com o objetivo de realizar o agendamento das tarefas e monitoramento das mesmas. Todas as configurações estão disponiveis na pasta [dags](airflow/dags/swapi).
+  Para a orquestração do projeto foi utilizada a ferramenta Airflow, com o objetivo de realizar a criação, agendamento das tarefas e monitoramento das mesmas. As tarefas (DAGs) foram construídas de forma a desencadear uma sequência de processos para a execução do pipeline de dados, garantindo que toda sua execução seja registrada, possibilitando localização precisa da ação caso tenha ocorrido algum erro no processo. As configurações realizadas nessa etapa encontram-se na pasta [dags](airflow/dags/swapi).
 
 ## Origem dos dados
 
-- <https://swapi.dev/api/people/>?
-- <https://swapi.dev/api/planets/>?
-- <https://swapi.dev/api/films/>?
+  Os dados utilizados para a execução desse projeto foram extraídos das fontes:
+  
+- People, disponível na URL: <https://swapi.dev/api/people/>?
+- Planets, disponível na URL: <https://swapi.dev/api/planets/>?
+- Films, disponível na URL: <https://swapi.dev/api/films/>?
 
 ## Como executar o projeto
 
-Para executar o projeto é necessário ter o docker e docker-compose instalados na máquina.
+Para executar o projeto é necessário ter as ferramentas Docker e Docker Compose instaladas na máquina.
 
 1. Clone o projeto.
 
-2. Execute o build da imagem do airflow customizada com as bibliotecas necessarias para o projeto:
+2. Execute o build da imagem do Airflow customizada com as bibliotecas necessarias para o projeto:
 
 ```bash
 docker build -t custom-airflow:2.7.2 -f ./Dockerfile.airflow .   
@@ -97,7 +101,7 @@ docker compose up airflow-init
 docker compose up
 ```
 
-6. Acesse o airflow em <http://localhost:8080>.
+6. Acesse o Airflow em <http://localhost:8080>.
 
 ## Contribuidores
 
